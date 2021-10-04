@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+
+<p>Array <input type="number" value="12" id="s"> <!--UI Displying Output and Adjustments -->
+<input type="number" value="9" id="n"> N</p>
+<pre id="b"></pre> <p> Equally Split Array</p>
+<pre id="e"></pre> <p> Array Length</p>
+
+<script>
+function arraysplit(a, n, balanced) {
+    
+    if (n < 0)  // If intiger is less than 0 return output as //
+        return [a];
+
+    var len = a.length, // Variable for array length //
+            out = [],
+            i = 0,
+            size;
+
+    if (len % n === 0) {             
+        size = Math.floor(len / n);  // returning the largest intiger less than or equal to the given number //
+        while (i < len) {
+            out.push(a.slice(i, i += size));
+        }
+    }
+
+    else if (balanced) {  
+        while (i < len) {  // while the number is less than array length //
+            size = Math.ceil((len - i) / n--); // round the number passed as parameter to its nearest integer in Upward direction of rounding //
+            out.push(a.slice(i, i += size));
+        }
+    }
+
+    else {
+
+        n--;
+        size = Math.floor(len / n);  // size equals the largest intiger less than or equal to the given number  (length divided by N) //
+        if (len % size === 0)
+            size--;
+        while (i < size * n) {
+            out.push(a.slice(i, i += size));
+        }
+        out.push(a.slice(size * n));
+
+    }
+
+    return out;
+}
+
+
+
+onload = function () { 
+    function $(x) {
+        return document.getElementById(x);
+    }
+// fuction to calc and return values //
+    function calc() {
+        var s = +$('s').value, a = [];
+        while (s--)
+            a.unshift(s);
+        var n = +$('n').value;
+        $('b').textContent = JSON.stringify(arraysplit(a, n, true))
+        $('e').textContent = JSON.stringify(arraysplit(a, n, false))
+    }
+
+    $('s').addEventListener('input', calc);
+    $('n').addEventListener('input', calc);
+    calc();
+}
+
+</script>
+
+
+
+
+</body>
+
+</html>
